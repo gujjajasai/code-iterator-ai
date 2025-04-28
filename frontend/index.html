@@ -1,0 +1,92 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aicade - Code Iterator AI</title>
+    <!-- Include PrismJS for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <!-- Basic language support for Prism -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+     <!-- Add more languages as needed (e.g., gdscript, lua) -->
+
+    <script src="script.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Ensure textarea and pre maintain monospace font */
+        #selectedCode, #suggestedCode pre {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        /* Style for loading state */
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: inline-block; /* Or 'block' and center */
+            margin: 10px auto; /* Center if block */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 flex flex-col items-center min-h-screen p-6 font-sans">
+
+    <h1 class="text-3xl font-bold mb-6 text-center text-blue-400">Aicade - Code Iterator AI Assistant</h1>
+
+    <div class="w-full max-w-4xl p-5 bg-gray-800 rounded-lg shadow-xl mb-6">
+        <label for="selectedCode" class="block text-lg font-semibold mb-2 text-gray-300">Your Code:</label>
+        <textarea id="selectedCode" class="w-full p-3 mb-4 rounded-lg border border-gray-600 bg-gray-700 text-gray-100 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" rows="10" placeholder="Paste or type your game code snippet here..."></textarea>
+
+        <label for="userPrompt" class="block text-lg font-semibold mb-2 text-gray-300">Describe Change:</label>
+        <input id="userPrompt" class="w-full p-3 mb-4 rounded-lg border border-gray-600 bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" placeholder="e.g., 'Optimize this loop', 'Refactor using Vector3', 'Add error handling'" />
+
+        <button onclick="getSuggestion()" id="suggestButton" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded transition duration-200 ease-in-out mb-6">
+            Get Suggestion ✨
+        </button>
+    </div>
+
+
+    <div id="loading" class="w-full max-w-4xl text-center" style="display: none;">
+        <div class="loader"></div>
+        <p class="text-gray-400">Generating suggestion...</p>
+    </div>
+
+    <div id="error" class="w-full max-w-4xl text-center bg-red-800 border border-red-600 text-white p-4 rounded mb-6" style="display: none;">
+        <p>Error fetching suggestion. Please check the console or try again.</p>
+        <p id="errorDetails" class="text-sm mt-2"></p>
+    </div>
+
+    <div id="result" class="w-full max-w-4xl bg-gray-800 p-5 rounded-lg shadow-xl" style="display: none;">
+        <h2 class="text-xl font-semibold mb-3 text-green-400">AI Suggestion:</h2>
+
+        <div class="mb-4">
+            <h3 class="text-lg font-semibold mb-2 text-gray-300">Explanation:</h3>
+            <div id="explanation" class="bg-gray-700 p-3 rounded border border-gray-600 text-gray-200 text-sm whitespace-pre-wrap"></div>
+        </div>
+
+        <div class="mb-4">
+             <h3 class="text-lg font-semibold mb-2 text-gray-300">Suggested Code:</h3>
+             <!-- Use 'language-xxxx' class for PrismJS. Detect language or default. -->
+             <div id="suggestedCode" class="bg-gray-900 p-3 rounded border border-gray-600 overflow-x-auto">
+                 <pre><code class="language-python"></code></pre> <!-- Default to python, change if needed -->
+             </div>
+        </div>
+
+
+        <button id="integrateButton" onclick="integrateCode()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-5 rounded transition duration-200 ease-in-out" style="display: none;">
+            Integrate Code ✅
+        </button>
+    </div>
+
+</body>
+</html>
