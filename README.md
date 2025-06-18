@@ -2,7 +2,7 @@
 
 **Author:** G Gnaneswara Rao
 
-This project is a Proof-of-Concept (POC) AI Code Iterator tool built for the Aicade AI Engineer hiring task. It functions as a lightweight code assistant, similar to Cursor, designed to help game developers by suggesting and applying code improvements based on user prompts.
+ It functions as a lightweight code assistant, similar to Cursor, designed to help game developers by suggesting and applying code improvements based on user prompts.
 
 ## Features (MVP Requirements Met)
 
