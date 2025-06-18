@@ -1,4 +1,4 @@
-# Aicade AI Engineer Task - Code Iterator Tool
+# Code Iterator Tool
 
 **Author:** G Gnaneswara Rao
 
